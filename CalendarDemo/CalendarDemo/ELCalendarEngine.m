@@ -69,4 +69,52 @@
     NSDate *newDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:date options:0];
     return newDate;
 }
+
++ (NSString *)dateOfIndex:(NSInteger)index date:(NSDate *)date
+{
+    NSInteger firstWeekDay = [self firstWeekdayInThisMonth:date];
+    NSInteger day = index - firstWeekDay + 1;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    dateComponents.year = [self year:date];
+    if (day < 1)
+    {
+        dateComponents.month = [self month:date]-1;
+        dateComponents.day = [ELCalendarEngine totaldaysInMonth:[ELCalendarEngine lastMonth:date]] + day;
+    }
+    else if(day > [ELCalendarEngine totaldaysInMonth:date])
+    {
+        dateComponents.month = [self month:date]+1;
+        dateComponents.day = day - [ELCalendarEngine totaldaysInMonth:date];
+    }
+    else
+    {
+        dateComponents.month = [self month:date];
+        dateComponents.day = day;
+    }
+    NSDate *newDate = [calendar dateFromComponents:dateComponents];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    return [dateFormatter stringFromDate:newDate];
+}
+
++ (NSInteger)compareDate:(NSDate *)date withNewDateString:(NSString *)string
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *newDate = [dateFormatter dateFromString:string];
+    if ([self month:newDate] < [self month:date])
+    {
+        return -1;
+    }
+    else if ([self month:newDate] > [self month:date])
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 @end

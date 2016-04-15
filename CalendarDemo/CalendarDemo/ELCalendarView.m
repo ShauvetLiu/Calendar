@@ -10,7 +10,7 @@
 #import "ELCalendarCollectionView.h"
 #import "ELCalendarEngine.h"
 
-@interface ELCalendarView()
+@interface ELCalendarView()<ELCalendarCollectionViewDelegate>
 
 @property (nonatomic, strong) NSArray *mWeekArray;
 @property (nonatomic, weak) ELCalendarCollectionView *mCalendarCollectionView;
@@ -42,6 +42,7 @@
     }
     
     ELCalendarCollectionView *calendar = [[ELCalendarCollectionView alloc]initWithFrame:CGRectMake(0, 30+((self.bounds.size.height-30)/7), self.bounds.size.width, ((self.bounds.size.height-30)/7)*6)];
+    calendar.delegate = self;
     [self addSubview:calendar];
     self.mCalendarCollectionView = calendar;
     
@@ -100,6 +101,18 @@
     self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
     self.mCalendarCollectionView.date = self.date;
     [self.mCalendarCollectionView reloadCollectionView];
+}
+
+#pragma mark --- ELCalendarCollectionViewDelegate
+- (void)didSelectedCellToTransferTheDate:(NSString *)date
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    self.date = [dateFormatter dateFromString:date];
+    self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedDate:)]) {
+        [self.delegate selectedDate:date];
+    }
 }
 
 @end

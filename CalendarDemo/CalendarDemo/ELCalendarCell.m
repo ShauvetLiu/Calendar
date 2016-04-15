@@ -18,6 +18,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
+        self.selectedBackgroundView.backgroundColor = [UIColor redColor];
         [self setUpUI];
     }
     return self;

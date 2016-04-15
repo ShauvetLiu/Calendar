@@ -113,5 +113,26 @@
 }
 
 #pragma mark --
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *dateString = [ELCalendarEngine dateOfIndex:indexPath.row date:self.date];
+    switch ([ELCalendarEngine compareDate:self.date withNewDateString:dateString]) {
+        case 0:
+            break;
+        case 1:
+            self.date = [ELCalendarEngine nextMonth:self.date];
+            [self reloadCollectionView];
+            break;
+        case -1:
+            self.date = [ELCalendarEngine lastMonth:self.date];
+            [self reloadCollectionView];
+            break;
+        default:
+            break;
+    };
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedCellToTransferTheDate:)]) {
+        [self.delegate didSelectedCellToTransferTheDate:dateString];
+    }
+}
 
 @end

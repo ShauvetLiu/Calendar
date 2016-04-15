@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ELCalendarViewDelegate <NSObject>
+
+- (void)selectedDate:(NSString *)date;
+
+@end
+
 @interface ELCalendarView : UIView
 
+@property (nonatomic, assign) id<ELCalendarViewDelegate> delegate;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSDate *today;
 

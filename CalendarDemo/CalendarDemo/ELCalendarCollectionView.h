@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ELCalendarCollectionViewDelegate <NSObject>
+
+- (void)didSelectedCellToTransferTheDate:(NSString *)date;
+
+@end
+
 @interface ELCalendarCollectionView : UIView
+@property (nonatomic, assign) id<ELCalendarCollectionViewDelegate> delegate;
 @property (nonatomic , strong) NSDate *date;
 @property (nonatomic , strong) NSDate *today;
 - (void)reloadCollectionView;

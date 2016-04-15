@@ -26,4 +26,8 @@
 
 + (NSDate*)nextMonth:(NSDate *)date;
 
++ (NSString *)dateOfIndex:(NSInteger)index date:(NSDate *)date;
+
++ (NSInteger)compareDate:(NSDate *)date withNewDateString:(NSString *)string;
+
 @end
