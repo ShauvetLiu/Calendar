@@ -17,8 +17,6 @@
 @interface ELCalendarView : UIView
 
 @property (nonatomic, assign) id<ELCalendarViewDelegate> delegate;
-@property (nonatomic, strong) NSDate *date;
-@property (nonatomic, strong) NSDate *today;
 
 - (void)refreshUI;
 

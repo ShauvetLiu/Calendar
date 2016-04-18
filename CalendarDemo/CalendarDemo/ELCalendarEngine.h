@@ -30,4 +30,6 @@
 
 + (NSInteger)compareDate:(NSDate *)date withNewDateString:(NSString *)string;
 
++ (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date;
+
 @end

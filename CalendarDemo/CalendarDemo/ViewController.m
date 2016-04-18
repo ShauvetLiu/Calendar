@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ELCalendarView.h"
+#import "ELCalendarEngine.h"
 
 #define DEVICE_SIZE [UIScreen mainScreen].bounds.size
 
@@ -22,8 +23,6 @@
     [super viewDidLoad];
     
     ELCalendarView *calendar = [[ELCalendarView alloc]initWithFrame:CGRectMake(0, 100, DEVICE_SIZE.width, DEVICE_SIZE.width+30)];
-    calendar.today = [NSDate date];
-    calendar.date = [NSDate date];
     calendar.delegate = self;
     [calendar refreshUI];
     [self.view addSubview:calendar];

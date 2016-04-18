@@ -117,4 +117,41 @@
     }
 }
 
++ (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date
+{
+    NSDateComponents *componentNow = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
+    NSDateComponents *component = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    
+    if (componentNow.month == 12)
+    {
+        if (component.month == 1 || component.month == 11)
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    else if (componentNow.month == 1)
+    {
+        if (component.month == 12 || component.month == 3)
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    else if ((componentNow.month - component.month) == 1 || (componentNow.month - component.month) == -1 || (componentNow.month - component.month) == 0)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
 @end

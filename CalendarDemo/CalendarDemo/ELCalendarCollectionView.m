@@ -119,12 +119,22 @@
         case 0:
             break;
         case 1:
-            self.date = [ELCalendarEngine nextMonth:self.date];
-            [self reloadCollectionView];
+            if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]]) {
+                self.date = [ELCalendarEngine nextMonth:self.date];
+                [self reloadCollectionView];
+            }else
+            {
+                return;
+            }
             break;
         case -1:
-            self.date = [ELCalendarEngine lastMonth:self.date];
-            [self reloadCollectionView];
+            if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]]) {
+                self.date = [ELCalendarEngine lastMonth:self.date];
+                [self reloadCollectionView];
+            }else
+            {
+                return;
+            }
             break;
         default:
             break;

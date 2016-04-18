@@ -11,7 +11,8 @@
 #import "ELCalendarEngine.h"
 
 @interface ELCalendarView()<ELCalendarCollectionViewDelegate>
-
+@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSDate *today;
 @property (nonatomic, strong) NSArray *mWeekArray;
 @property (nonatomic, weak) ELCalendarCollectionView *mCalendarCollectionView;
 @property (nonatomic, weak) UILabel *mCurrentMonth;
@@ -24,6 +25,8 @@
     if (self = [super initWithFrame:frame])
     {
         self.mWeekArray = @[@"日",@"一",@"二",@"三",@"四",@"五",@"六"];
+        self.today = [NSDate date];
+        self.date = [NSDate date];
         [self createUI];
     }
     return self;
@@ -89,18 +92,33 @@
 
 - (void)lastMonth
 {
-    self.date = [ELCalendarEngine lastMonth:self.date];
-    self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
-    self.mCalendarCollectionView.date = self.date;
-    [self.mCalendarCollectionView reloadCollectionView];
+    if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]])
+    {
+        self.date = [ELCalendarEngine lastMonth:self.date];
+        self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
+        self.mCalendarCollectionView.date = self.date;
+        [self.mCalendarCollectionView reloadCollectionView];
+    }
+    else
+    {
+        return;
+    }
 }
 
 - (void)nextMonth
 {
-    self.date = [ELCalendarEngine nextMonth:self.date];
-    self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
-    self.mCalendarCollectionView.date = self.date;
-    [self.mCalendarCollectionView reloadCollectionView];
+    if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]])
+    {
+        self.date = [ELCalendarEngine nextMonth:self.date];
+        self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
+        self.mCalendarCollectionView.date = self.date;
+        [self.mCalendarCollectionView reloadCollectionView];
+    }
+    else
+    {
+        return;
+    }
+    
 }
 
 #pragma mark --- ELCalendarCollectionViewDelegate
