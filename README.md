@@ -9,7 +9,7 @@
 calendar.delegate = self;
 [calendar refreshUI]();
 [self.view addSubview:calendar]();
-\<code\>
+\</code\>
 ### ELCalendarCollectionView
 日历主视图，通过collection view显示。
 ### ELCalendarEngine
