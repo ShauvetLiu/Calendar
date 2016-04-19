@@ -55,7 +55,7 @@
 {
     
     UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 30)];
-    topView.backgroundColor = [UIColor colorWithRed:215/255.0 green:50/255.0 blue:50/255.0 alpha:1.0];
+    topView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
     [self addSubview:topView];
     
     UIButton *lastMonth = [UIButton buttonWithType:UIButtonTypeCustom];

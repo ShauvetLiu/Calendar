@@ -38,6 +38,7 @@
 
 - (void)refreshCell:(NSDictionary *)dic
 {
+    self.backgroundColor = [UIColor orangeColor];
     [self.dateLabel setText:dic[@"string"]];
     [self.dateLabel setTextColor:dic[@"color"]];
 }

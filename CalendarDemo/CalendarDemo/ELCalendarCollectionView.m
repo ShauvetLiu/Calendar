@@ -108,30 +108,36 @@
             }
         }
         return @{@"string":[NSString stringWithFormat:@"%ld",day],
-                        @"color":[UIColor blackColor]};
+                 @"color":[UIColor blackColor]};
     }
 }
 
 #pragma mark --
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     NSString *dateString = [ELCalendarEngine dateOfIndex:indexPath.row date:self.date];
-    switch ([ELCalendarEngine compareDate:self.date withNewDateString:dateString]) {
+    switch ([ELCalendarEngine compareDate:self.date withNewDateString:dateString])
+    {
         case 0:
             break;
         case 1:
-            if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]]) {
+            if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]])
+            {
                 self.date = [ELCalendarEngine nextMonth:self.date];
                 [self reloadCollectionView];
-            }else
+            }
+            else
             {
                 return;
             }
             break;
         case -1:
-            if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]]) {
+            if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]])
+            {
                 self.date = [ELCalendarEngine lastMonth:self.date];
                 [self reloadCollectionView];
-            }else
+            }
+            else
             {
                 return;
             }
@@ -139,10 +145,17 @@
         default:
             break;
     };
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedCellToTransferTheDate:)]) {
+    ELCalendarCell *cell = (ELCalendarCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedCellToTransferTheDate:)])
+    {
         [self.delegate didSelectedCellToTransferTheDate:dateString];
     }
+}
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ELCalendarCell *cell = (ELCalendarCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor orangeColor];
 }
 
 @end
