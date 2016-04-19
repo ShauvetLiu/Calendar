@@ -12,19 +12,28 @@
 
 + (NSInteger)day:(NSDate *)date
 {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear |
+                                                                             NSCalendarUnitMonth |
+                                                                             NSCalendarUnitDay)
+                                                                   fromDate:date];
     return [components day];
 }
 
 + (NSInteger)month:(NSDate *)date
 {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear |
+                                                                             NSCalendarUnitMonth |
+                                                                             NSCalendarUnitDay)
+                                                                   fromDate:date];
     return [components month];
 }
 
 + (NSInteger)year:(NSDate *)date
 {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear |
+                                                                             NSCalendarUnitMonth |
+                                                                             NSCalendarUnitDay)
+                                                                   fromDate:date];
     return [components year];
 }
 
@@ -75,7 +84,10 @@
     NSInteger firstWeekDay = [self firstWeekdayInThisMonth:date];
     NSInteger day = index - firstWeekDay + 1;
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComponents = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    NSDateComponents *dateComponents = [calendar components:(NSCalendarUnitYear |
+                                                             NSCalendarUnitMonth |
+                                                             NSCalendarUnitDay)
+                                                   fromDate:date];
     dateComponents.year = [self year:date];
     if (day < 1)
     {
@@ -119,8 +131,14 @@
 
 + (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date
 {
-    NSDateComponents *componentNow = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
-    NSDateComponents *component = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
+    NSDateComponents *componentNow = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear |
+                                                                               NSCalendarUnitMonth |
+                                                                               NSCalendarUnitDay)
+                                                                     fromDate:[NSDate date]];
+    NSDateComponents *component = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear |
+                                                                            NSCalendarUnitMonth |
+                                                                            NSCalendarUnitDay)
+                                                                  fromDate:date];
     
     if (componentNow.month == 12)
     {
@@ -144,7 +162,9 @@
             return NO;
         }
     }
-    else if ((componentNow.month - component.month) == 1 || (componentNow.month - component.month) == -1 || (componentNow.month - component.month) == 0)
+    else if ((componentNow.month - component.month) == 1 ||
+             (componentNow.month - component.month) == -1 ||
+             (componentNow.month - component.month) == 0)
     {
         return YES;
     }
