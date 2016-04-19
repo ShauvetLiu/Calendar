@@ -5,10 +5,11 @@
 ## 各个类的用途
 ### ELCalendarView
 是整个日历最底层的view，传入默认取当天的日期，通过代理回传点击事件，内部封装了上下月按钮，显示日历的主视图，实现为collectionview。
-	ELCalendarView *calendar = [[ELCalendarView alloc]initWithFrame:CGRectMake(0, 100, DEVICE_SIZE.width, DEVICE_SIZE.width+30)];
-	calendar.delegate = self;
-	[calendar refreshUI];
-	[self.view addSubview:calendar];
+\<code\> ELCalendarView *calendar = [\[ELCalendarView alloc]()initWithFrame:CGRectMake(0, 100, DEVICE_SIZE.width, DEVICE_SIZE.width+30)];
+calendar.delegate = self;
+[calendar refreshUI]();
+[self.view addSubview:calendar]();
+\<code\>
 ### ELCalendarCollectionView
 日历主视图，通过collection view显示。
 ### ELCalendarEngine
@@ -17,4 +18,5 @@
 刷新日历cell用到的model，可以进行拓展，目前项目需求尚未明确，后台数据也没敲定，所以预留以后进行拓展和数据回传。
 ### ELCalendarCell
 collectionview显示日历的cell。
+
 
