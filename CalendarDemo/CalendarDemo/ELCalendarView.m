@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSArray *mWeekArray;
 @property (nonatomic, weak) ELCalendarCollectionView *mCalendarCollectionView;
 @property (nonatomic, weak) UILabel *mCurrentMonth;
+@property (nonatomic, weak) UIButton *nextMonthBtn;
+@property (nonatomic, weak) UIButton *lastMonthBtn;
 @end
 
 @implementation ELCalendarView
@@ -66,6 +68,7 @@
     lastMonth.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
     [lastMonth addTarget:self action:@selector(lastMonth) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:lastMonth];
+    self.lastMonthBtn = lastMonth;
     
     UIButton *nextMonth = [UIButton buttonWithType:UIButtonTypeCustom];
     nextMonth.frame = CGRectMake(self.bounds.size.width-100, 0, 100, 30);
@@ -75,6 +78,7 @@
     nextMonth.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
     [nextMonth addTarget:self action:@selector(nextMonth) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:nextMonth];
+    self.nextMonthBtn = nextMonth;
     
     UILabel *currentMonth = [[UILabel alloc]initWithFrame:CGRectMake(100, 0, self.bounds.size.width-200, 30)];
     currentMonth.textAlignment = NSTextAlignmentCenter;
@@ -98,6 +102,16 @@
         self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
         self.mCalendarCollectionView.date = self.date;
         [self.mCalendarCollectionView reloadCollectionView];
+        if (![ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]]) {
+            self.lastMonthBtn.userInteractionEnabled = NO;
+            self.lastMonthBtn.backgroundColor = [UIColor grayColor];
+            self.nextMonthBtn.userInteractionEnabled = YES;
+            self.nextMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        }
+        if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]]) {
+            self.nextMonthBtn.userInteractionEnabled = YES;
+            self.nextMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        }
     }
     else
     {
@@ -113,6 +127,16 @@
         self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
         self.mCalendarCollectionView.date = self.date;
         [self.mCalendarCollectionView reloadCollectionView];
+        if (![ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]]) {
+            self.nextMonthBtn.userInteractionEnabled = NO;
+            self.nextMonthBtn.backgroundColor = [UIColor grayColor];
+            self.lastMonthBtn.userInteractionEnabled = YES;
+            self.lastMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        }
+        if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]]) {
+            self.lastMonthBtn.userInteractionEnabled = YES;
+            self.lastMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        }
     }
     else
     {
@@ -128,6 +152,35 @@
     dateFormatter.dateFormat = @"yyyy-MM-dd";
     self.date = [dateFormatter dateFromString:date];
     self.mCurrentMonth.text = [NSString stringWithFormat:@"%ld年%ld月",[ELCalendarEngine year:self.date],[ELCalendarEngine month:self.date]];
+    
+    if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine nextMonth:self.date]]) {
+        self.nextMonthBtn.userInteractionEnabled = YES;
+        self.nextMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]]) {
+            self.lastMonthBtn.userInteractionEnabled = YES;
+            self.lastMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        }else
+        {
+            self.lastMonthBtn.userInteractionEnabled = NO;
+            self.lastMonthBtn.backgroundColor = [UIColor grayColor];
+
+        }
+    }else
+    {
+        self.nextMonthBtn.userInteractionEnabled = NO;
+        self.nextMonthBtn.backgroundColor = [UIColor grayColor];
+        if ([ELCalendarEngine needRefreshCollectionViewWithDate:[ELCalendarEngine lastMonth:self.date]]) {
+            self.lastMonthBtn.userInteractionEnabled = YES;
+            self.lastMonthBtn.backgroundColor = [UIColor colorWithRed:1.0 green:165/255.0 blue:2/255.0 alpha:1.0];
+        }else
+        {
+            self.lastMonthBtn.userInteractionEnabled = NO;
+            self.lastMonthBtn.backgroundColor = [UIColor grayColor];
+            
+        }
+    }
+    
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectedDate:)]) {
         [self.delegate selectedDate:date];
     }
