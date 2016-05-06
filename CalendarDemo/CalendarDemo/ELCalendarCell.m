@@ -7,9 +7,11 @@
 //
 
 #import "ELCalendarCell.h"
+#import "ELCalendarModel.h"
 
 @interface ELCalendarCell()
 @property (nonatomic , weak) UILabel *dateLabel;
+@property (nonatomic, strong) UIColor *backColor;
 @end
 
 @implementation ELCalendarCell
@@ -22,6 +24,11 @@
         [self setUpUI];
     }
     return self;
+}
+
+- (void)backToNormal
+{
+    self.backgroundColor = self.backColor;
 }
 
 - (void)setUpUI
@@ -41,6 +48,38 @@
     self.backgroundColor = [UIColor orangeColor];
     [self.dateLabel setText:dic[@"string"]];
     [self.dateLabel setTextColor:dic[@"color"]];
+}
+
+- (void)refreshCellWithModel:(ELCalendarModel *)model
+{
+    switch (model.dayType) {
+        case 0:
+            self.backgroundColor = [UIColor cyanColor];
+            self.backColor = [UIColor cyanColor];
+            break;
+        case 1:
+            self.backgroundColor = [UIColor whiteColor];
+            self.backColor = [UIColor whiteColor];
+            break;
+        case 2:
+            self.backgroundColor = [UIColor greenColor];
+            self.backColor = [UIColor greenColor];
+            break;
+        case 3:
+            self.backgroundColor = [UIColor blueColor];
+            self.backColor = [UIColor blueColor];
+            break;
+        case 4:
+            self.backgroundColor = [UIColor yellowColor];
+            self.backColor = [UIColor yellowColor];
+            break;
+        case 5:
+            self.backgroundColor = [UIColor lightGrayColor];
+            self.backColor = [UIColor lightGrayColor];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

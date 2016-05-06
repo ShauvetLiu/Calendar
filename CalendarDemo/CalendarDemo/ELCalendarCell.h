@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class ELCalendarModel;
 @interface ELCalendarCell : UICollectionViewCell
 
 - (void)refreshCell:(NSDictionary *)dic;
+
+- (void)refreshCellWithModel:(ELCalendarModel *)model;
+
+- (void)backToNormal;
 
 @end

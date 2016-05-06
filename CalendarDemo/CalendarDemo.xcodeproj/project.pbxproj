@@ -54,6 +54,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F982B0161CC7598400C4248B /* view */ = {
+			isa = PBXGroup;
+			children = (
+				F9F9C7921CBF882700F7AB33 /* ELCalendarCell.h */,
+				F9F9C7931CBF882700F7AB33 /* ELCalendarCell.m */,
+				F9F9C7981CBF8B0B00F7AB33 /* ELCalendarCollectionView.h */,
+				F9F9C7991CBF8B0B00F7AB33 /* ELCalendarCollectionView.m */,
+				F9F9C79B1CBF9F4700F7AB33 /* ELCalendarView.h */,
+				F9F9C79C1CBF9F4700F7AB33 /* ELCalendarView.m */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		F982B0171CC7599100C4248B /* model */ = {
+			isa = PBXGroup;
+			children = (
+				F9DF81EE1CC0BC720045A042 /* ELCalendarModel.h */,
+				F9DF81EF1CC0BC720045A042 /* ELCalendarModel.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		F982B0181CC7599800C4248B /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				F9F9C7951CBF89BA00F7AB33 /* ELCalendarEngine.h */,
+				F9F9C7961CBF89BA00F7AB33 /* ELCalendarEngine.m */,
+			);
+			name = engine;
+			sourceTree = "<group>";
+		};
+		F982B0191CC759B300C4248B /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				F9F9C77E1CBF72B700F7AB33 /* ViewController.h */,
+				F9F9C77F1CBF72B700F7AB33 /* ViewController.m */,
+			);
+			name = vc;
+			sourceTree = "<group>";
+		};
 		F9F9C76C1CBF72B700F7AB33 = {
 			isa = PBXGroup;
 			children = (
@@ -73,24 +113,10 @@
 		F9F9C7771CBF72B700F7AB33 /* CalendarDemo */ = {
 			isa = PBXGroup;
 			children = (
-				F9F9C7921CBF882700F7AB33 /* ELCalendarCell.h */,
-				F9F9C7931CBF882700F7AB33 /* ELCalendarCell.m */,
-				F9DF81EE1CC0BC720045A042 /* ELCalendarModel.h */,
-				F9DF81EF1CC0BC720045A042 /* ELCalendarModel.m */,
-				F9F9C7951CBF89BA00F7AB33 /* ELCalendarEngine.h */,
-				F9F9C7961CBF89BA00F7AB33 /* ELCalendarEngine.m */,
-				F9F9C7981CBF8B0B00F7AB33 /* ELCalendarCollectionView.h */,
-				F9F9C7991CBF8B0B00F7AB33 /* ELCalendarCollectionView.m */,
-				F9F9C79B1CBF9F4700F7AB33 /* ELCalendarView.h */,
-				F9F9C79C1CBF9F4700F7AB33 /* ELCalendarView.m */,
-				F9F9C77B1CBF72B700F7AB33 /* AppDelegate.h */,
-				F9F9C77C1CBF72B700F7AB33 /* AppDelegate.m */,
-				F9F9C77E1CBF72B700F7AB33 /* ViewController.h */,
-				F9F9C77F1CBF72B700F7AB33 /* ViewController.m */,
-				F9F9C7811CBF72B700F7AB33 /* Main.storyboard */,
-				F9F9C7841CBF72B700F7AB33 /* Assets.xcassets */,
-				F9F9C7861CBF72B700F7AB33 /* LaunchScreen.storyboard */,
-				F9F9C7891CBF72B700F7AB33 /* Info.plist */,
+				F982B0191CC759B300C4248B /* vc */,
+				F982B0161CC7598400C4248B /* view */,
+				F982B0171CC7599100C4248B /* model */,
+				F982B0181CC7599800C4248B /* engine */,
 				F9F9C7781CBF72B700F7AB33 /* Supporting Files */,
 			);
 			path = CalendarDemo;
@@ -99,6 +125,12 @@
 		F9F9C7781CBF72B700F7AB33 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F9F9C77B1CBF72B700F7AB33 /* AppDelegate.h */,
+				F9F9C77C1CBF72B700F7AB33 /* AppDelegate.m */,
+				F9F9C7811CBF72B700F7AB33 /* Main.storyboard */,
+				F9F9C7841CBF72B700F7AB33 /* Assets.xcassets */,
+				F9F9C7861CBF72B700F7AB33 /* LaunchScreen.storyboard */,
+				F9F9C7891CBF72B700F7AB33 /* Info.plist */,
 				F9F9C7791CBF72B700F7AB33 /* main.m */,
 			);
 			name = "Supporting Files";

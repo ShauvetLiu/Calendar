@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    DayEventTypeNone,
+    DayEventTypeUnblockDay,
+    DayEventTypeRepaymentDay,
+    DayEventTypeDateDueDay,
+    DayEventTypeDouble,
+    DayEventTypeTriple,
+} DayEventType;
+
 @interface ELCalendarModel : NSObject
+
+@property (nonatomic, assign) DayEventType dayType;
 
 @end

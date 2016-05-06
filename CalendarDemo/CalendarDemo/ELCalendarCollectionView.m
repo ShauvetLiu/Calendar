@@ -9,9 +9,12 @@
 #import "ELCalendarCollectionView.h"
 #import "ELCalendarCell.h"
 #import "ELCalendarEngine.h"
+#import "ELCalendarModel.h"
 
 @interface ELCalendarCollectionView()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 @property (nonatomic, weak) UICollectionView *mCollectionView;
+@property (nonatomic, strong) NSMutableArray *dateArray;
+
 @end
 
 @implementation ELCalendarCollectionView
@@ -20,6 +23,18 @@
 {
     if (self = [super initWithFrame:frame])
     {
+        NSArray *array = @[@(DayEventTypeNone),
+                           @(DayEventTypeUnblockDay),
+                           @(DayEventTypeRepaymentDay),
+                           @(DayEventTypeDateDueDay),
+                           @(DayEventTypeDouble),
+                           @(DayEventTypeTriple)];
+        self.dateArray = [NSMutableArray array];
+        for (int i = 0; i<50; i++) {
+            ELCalendarModel *model = [[ELCalendarModel alloc]init];
+            model.dayType = [array[arc4random()%6] integerValue];
+            [self.dateArray addObject:model];
+        }
         [self mainUI];
     }
     return self;
@@ -65,6 +80,9 @@
 {
     ELCalendarCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ELCalendarCell" forIndexPath:indexPath];
     [cell refreshCell:[self riqi:indexPath]];
+    if (indexPath.row >= [ELCalendarEngine firstWeekdayInThisMonth:_date] && indexPath.row <= [ELCalendarEngine totaldaysInMonth:_date] + [ELCalendarEngine firstWeekdayInThisMonth:_date]) {
+        [cell refreshCellWithModel:self.dateArray[indexPath.row - [ELCalendarEngine firstWeekdayInThisMonth:_date] + 1]];
+    }
     return cell;
 }
 
@@ -72,7 +90,6 @@
 {
     NSInteger daysInThisMonth = [ELCalendarEngine totaldaysInMonth:_date];
     NSInteger firstWeekday = [ELCalendarEngine firstWeekdayInThisMonth:_date];
-    
     NSInteger daysInLastMouth = [ELCalendarEngine totaldaysInMonth:[ELCalendarEngine lastMonth:_date]];
     
     NSInteger day = 0;
@@ -100,15 +117,22 @@
     {
         day = i - firstWeekday + 1;
         
-        if ([ELCalendarEngine year:_today] == [ELCalendarEngine year:_date] && [ELCalendarEngine month:_today] == [ELCalendarEngine month:_date] && [ELCalendarEngine day:_today] == [ELCalendarEngine day:_date]) {
-            if (day == [ELCalendarEngine day:_date])
+        if ([ELCalendarEngine year:_today] == [ELCalendarEngine year:_date] && [ELCalendarEngine month:_today] == [ELCalendarEngine month:_date]) {
+            if (day == [ELCalendarEngine day:_today])
             {
                 return @{@"string":[NSString stringWithFormat:@"%ld",day],
                          @"color":[UIColor redColor]};
+            }else
+            {
+                return @{@"string":[NSString stringWithFormat:@"%ld",day],
+                         @"color":[UIColor blackColor]};
             }
         }
-        return @{@"string":[NSString stringWithFormat:@"%ld",day],
-                 @"color":[UIColor blackColor]};
+        else
+        {
+            return @{@"string":[NSString stringWithFormat:@"%ld",day],
+                     @"color":[UIColor blackColor]};
+        }
     }
 }
 
@@ -155,7 +179,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ELCalendarCell *cell = (ELCalendarCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor orangeColor];
+    [cell backToNormal];
 }
 
 @end
