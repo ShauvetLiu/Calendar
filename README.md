@@ -20,3 +20,10 @@
 ### ELCalendarCell
 collectionview显示日历的cell。
 
+###关于UICollectionView的疑问
+1.在UICollectionViewFlowLayout中设置cell边距为0，cell的宽和高都为屏幕的宽度/7，会导致在cell之间的某些位置出现小的缝隙。
+
+2.在纵向的边界线也会出现，暂时的推断是retina屏幕的尺寸除以7会导致浮点数的产生，而累加到一定程度的时候会产生较大的误差，但是layout还是让cell之间间隔为0，这一问题仍需探究。
+
+3.cell的边框，也就是cell的contentView的图层的边框是向内延伸的，不能从边框的宽度的角度，来混弄过关😳。
+
