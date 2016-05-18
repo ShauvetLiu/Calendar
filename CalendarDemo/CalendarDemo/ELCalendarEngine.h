@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface ELCalendarEngine : NSObject
 
@@ -64,5 +65,25 @@
  *  判断是否要刷新  需求只显示前后一个月，公三个月份
  */
 + (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date;
+
+/**
+ *  根据结束日期和开始日期 判断是否需要刷新
+ */
++ (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date withStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate;
+
+/**
+ *  根据选择日期，当前日历日期和cell的indexPath来判断是否是选中的状态
+ */
++ (BOOL)isSelectedDate:(NSDate *)selectedDate date:(NSDate *)date indexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  选中cell，通过当前日历日期和选中的indexPath，计算出选择的日期
+ */
++ (NSDate *)dateByIndexPath:(NSIndexPath *)indexPath inDate:(NSDate *)date;
+
+/**
+ *  根据记录的选择的日期和当前日历的日期，返回选中的日期在当前日历中的indexPath
+ */
++ (NSIndexPath *)indexPathBySelectedDate:(NSDate *)selectedDate inDate:(NSDate *)date;
 
 @end

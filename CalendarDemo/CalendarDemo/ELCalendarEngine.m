@@ -115,6 +115,28 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
     NSDate *newDate = [dateFormatter dateFromString:string];
+    if ([self month:date] == 12) {
+        if ([self month:newDate] == 1) {
+            return 1;
+        }
+        if ([self month:newDate] == 11) {
+            return -1;
+        }
+        if ([self month:newDate] == 12) {
+            return 0;
+        }
+    }
+    if ([self month:date] == 1) {
+        if ([self month:newDate] == 2) {
+            return 1;
+        }
+        if ([self month:newDate] == 12) {
+            return -1;
+        }
+        if ([self month:newDate] == 1) {
+            return 0;
+        }
+    }
     if ([self month:newDate] < [self month:date])
     {
         return -1;
@@ -127,6 +149,7 @@
     {
         return 0;
     }
+
 }
 
 + (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date
@@ -174,9 +197,58 @@
     }
 }
 
-- (void)calculateDate:(NSDate *)date
++ (BOOL)needRefreshCollectionViewWithDate:(NSDate *)date withStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM";
+    NSDate *currentDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:date]];
+    NSDate *beginDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:startDate]];
+    NSDate *overDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:endDate]];
+    
+    if ([currentDate compare:beginDate] == NSOrderedAscending) {
+        return NO;
+    }
+    if ([currentDate compare:overDate] == NSOrderedDescending) {
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)isSelectedDate:(NSDate *)selectedDate date:(NSDate *)date indexPath:(NSIndexPath *)indexPath
 {
     
+    if ([self year:selectedDate] == [self year:date] && [self month:date] == [self month:selectedDate]) {
+        NSInteger firstWeekDay = [self firstWeekdayInThisMonth:date];
+        NSInteger selectedDay = [self day:selectedDate];
+        if ( indexPath.row - firstWeekDay + 1 == selectedDay ) {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return NO;
+    }
 }
+
++ (NSDate *)dateByIndexPath:(NSIndexPath *)indexPath inDate:(NSDate *)date
+{
+    NSInteger firstWeekDay = [self firstWeekdayInThisMonth:date];
+    NSInteger day = indexPath.row - firstWeekDay + 1;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *newDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%ld-%ld-%ld",[self year:date],[self month:date],day]];
+    return newDate;
+}
+
++ (NSIndexPath *)indexPathBySelectedDate:(NSDate *)selectedDate inDate:(NSDate *)date
+{
+    NSInteger firstWeekDay = [self firstWeekdayInThisMonth:date];
+    NSInteger index = [self day:selectedDate] + firstWeekDay - 1;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    return indexPath;
+}
+
 
 @end
